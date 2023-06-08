@@ -1,0 +1,384 @@
+syntax = "proto3";
+package proto3_flight_info;
+import "MetaData.proto";
+
+message Proto_FlyBaseStatus {
+  string Name = 1;                             // 飞机名称
+  optional int32 Milliseconds = 2;                      // 时间
+  optional float AirSpeed = 3;                          // 空速
+  optional float GroundSpeed = 4;                       // 地速
+  optional MetaData.Proto_FlyMode Mode = 5;             // 当前飞行模式
+  optional MetaData.Proto_LLA Position = 6;             // 当前位置
+  optional MetaData.Proto_EulerAnglesF Orientation = 7; // 当前姿态
+  optional  bool IsInOnGround = 8;                       // 是否处于地面测试模式
+  optional float Mass = 9;                              // 质量
+  optional string ProductModel = 10;
+  optional double RH =11; //相对高度
+}
+
+// 电池或油量信息
+message Proto_PowerInfo {
+  optional  bool IsUsingBattery = 1;             // 是否使用电池
+  repeated float BatteryVoltage = 2;   // 电池电压
+  repeated float BatteryCurrent = 3;   // 电池电流
+  repeated float BatteryRemaining = 4; // 电池剩余电量
+  // 电池容量
+  repeated float BatteryCapacity = 5;
+  optional bool IsUsingFuel = 6;    // 是否使用油箱
+  optional float FuelRemaining = 7; // 油箱剩余油量
+}
+
+// 任务状态
+message Proto_TaskStatus {
+  optional MetaData.Proto_FlyMode Mode = 5; // 当前飞行模式
+  optional string ControlTaskStates = 6;    // 飞行控制任务状态
+  optional bool IsInOnGround = 8;           // 是否处于地面
+  optional float FlyTime = 9;               // 飞行时间
+  optional float FlyDistance = 10;          // 飞行里程
+}
+
+// 飞行计划参数
+message Proto_FlightPlanParams {
+  float DefaultTurningRadius = 1;
+  float MinTurningRadius = 2;
+  float DefaultCircleRadius = 3;
+  float MinCircleRadius = 4;
+  float DefaultVerticalTakeOffRelativeHeight = 5;
+  float DefaultTakeOffClimbRelativeHeight = 6;
+  float DefaultVerticalLandHeight = 7;
+  bool HasTakeOffAndLandClimbCircle = 8;
+  float DefaultTakeOffAndLandCircleDistance = 9;
+  float MaxTakeOffAndLandCircleDistance = 10;
+  float AltitudeChangeCirclePreviewClimbAngleAbs = 11;
+  float LandDescentAngleAbs = 12;
+}
+
+message Proto_AircraftStatesForFlightPlan {
+  // 巡航飞行的目标速度。
+  float TargetCruiseSpeed = 1;
+  // 垂直上升速度。正数。
+  float VTOLClimbSpeed = 2;
+  // 垂直下降速度。负数。
+  float VTOLDescentSpeed = 3;
+  // 飞机坐标系原点，在起落架以上的高度。
+  float AircraftOriginHeightAboveLandingGearBottom = 4;
+}
+
+// 与飞行计划编辑有关的飞机高度定义。
+message Proto_AltitudeDefInfo {
+  double AircraftReferenceAltitude = 1;
+  double MinAltAGL = 2;
+  double MaxAltAGL = 3;
+}
+
+message Proto_FlyProgress {
+  optional uint32 Milliseconds = 1;//飞机飞控开机毫秒数
+  optional int32 TaskState = 2; //任务状态
+  optional  uint32 ScheduleID = 3; //飞行计划标识
+  optional int32 CurrentPlanItemIndex = 4; //当前飞行计划项
+  optional uint32 HorizNaviMode = 6; //水平导航模式
+  optional uint32 VertNaviMode = 7; //垂直导航模式
+  optional uint32 LonInnerMode = 8; 
+  optional uint32 LatInnerMode = 9;
+  optional uint32 RotorExpandState = 10;
+  optional uint32 CargoState = 11;
+  optional  float EquivSeaLevelAirspeed = 12;
+  optional float AirDensity = 13;
+  optional double ReferenceAltitude = 14;
+  optional double TargetAltitude = 15;
+  optional float LandingGearAltAGLByRadar = 16;
+  optional float DetectedGroundAltitude = 17;
+  optional int32 DiagnosticActionType = 18;
+  optional double FlyDistance = 19;
+  optional float CurrentPlanItemOrTemporaryPathCompletePercent = 20;
+  optional  MetaData.Proto_PointOnFlyPath GotoThisPointAfterTakeoffSectionFinished = 21;
+  optional uint32 FlySeconds = 22;
+  optional float TargetFlySpeed = 23;
+  optional uint32 MagneticConfiguration = 24;
+  optional uint32 WingCruiseLonOverrideMode = 25;
+  optional bool IsAllCruiseFuelEnginePowerOn = 26;
+  optional bool IsAllCruiseFuelEngineRunning = 27;
+  optional  bool ShouldCruiseEngineAvailable = 28;
+  optional bool IsOnGround = 29;    //飞机在地面
+  optional bool IsCmdRotorExpand = 30;
+  optional bool IsCmdCargoLock = 31;
+  optional bool IsAGLBySonarAvailable = 32;
+  optional bool IsInTestMotorServoMode = 33;
+  optional bool IsUsePitotTube = 34;
+  optional bool IsMotorsAndServosEnabled = 35;
+  optional bool HasLiftedOff = 36;
+  optional bool IsFlightScheduleHasFinished = 37;
+  optional bool IsPilotControlActive = 38;
+  optional bool IsWingCruiseHasFailed = 39;
+  optional bool IsEmergencyLandRequested = 40;
+  optional bool IsEmergencyLand = 41;
+  optional bool HasException = 42;
+  optional bool IsInSafeMode = 43;
+  optional bool IsInTemporaryPath = 44;
+  optional bool IsGNSSDataQualityGood = 45;
+  optional bool IsRejectingTakeOff = 46;
+  optional bool IsBreakPointRecorded = 47;
+  optional bool IsInHighPosAccuracyRotorModes = 48;
+  optional bool IsTargetAltitudeAGL = 49;
+  optional bool IsPosFileOpen = 50;
+  optional bool IsCameraAutoShootPeriodically = 51;
+  optional bool IsRequestOpenOnboardLog = 52;
+  optional bool IsOnboardLogOpen = 53;
+  optional bool EnableFlightControlBoardAutoHeater = 54;
+  optional bool IsAutoSelfDriveSpeed = 55;
+  optional bool IsTargetAirspeedElseGndspeed = 56;
+  optional bool IsLowAltitudeProtection = 57; //向下避障
+}
+
+//飞机设置项
+message Proto_AircraftSetting{
+    string AircraftName =1;//飞机名
+    optional  bool IsOpenEngine =2; //开启动力
+    optional  bool IsLowAltitudeProtection =3; //向下避障
+    optional  bool IsEnableBatteryEnergyLowAutoReturn =4;//开启低电量返航
+    optional  bool IsEnableFlyPlanModeAutoReturnWhenLinkLost =5;//开启飞行计划模式数据链中断返航
+    optional  bool IsEnableExitRICModeWhenLinkLost = 6;//开启实时控制模式数据链中断返航
+    optional   bool IsDisableEmergencyAutoLand = 7;//是禁用紧急降落
+    optional  bool IsAutoVertPortMode =8 ;// 开启自动机巢
+    optional   bool IsAutoSelfDriveAirspeed =9 ;//开启自动速度
+    optional   bool IsForceExpandRotorsOnGround =10 ; //展开旋翼
+
+    optional Proto_AircraftPayloadSetting  Payload =11; //云台载荷设置信息
+   
+}
+
+//飞机载荷设置
+message Proto_AircraftPayloadSetting{
+    optional bool IsStopRecordOnLand =1; //云台降落停录
+    optional bool IsBeginRecordOnTakeOff =2; //云台起飞录像
+    optional bool IsGimbalCameraSDCardDestroyPowerOn =3; // 云台销毁SD卡
+    optional bool IsCameraRecordingVideo =4; //云台开起录像
+    optional bool IsOSDEnabled =5;//云台显示OSD
+    optional bool IsRangerEnabled =6;//云台开启激光测距
+    optional bool IsYawFollowEnabled =7; //云台开启目标跟踪
+}
+
+// Gnss状态
+message Proto_GnssInfo {
+  optional MetaData.Proto_GNSSLocationStatus PositioningStatus = 1; // 定位状态
+  optional MetaData.Proto_RTKSolutionState RTKState = 2;            // RTK状态
+  optional MetaData.Proto_LLA Position = 3;                         // 当前位置
+  optional int32 SateNum = 4;                                       // 卫星数量
+}
+
+message Proto_AircraftMessage {
+  MetaData.Proto_MessageLevel Level = 1; // 消息等级
+  string Message = 2;                    // 消息内容
+  int64 TimeStamp = 3;                   // 时间戳
+}
+
+
+// 来自地面控制中心的消息判断
+message AircraftControlCenterMessages{
+  repeated string Messages = 1; // 飞机消息
+}
+
+message Proto_AircraftMessages {
+  repeated Proto_AircraftMessage Messages = 1; // 飞机消息
+}
+
+
+message Porto_BoolDouble{
+    bool BoolValue = 1;
+    double DoubleValue = 2;
+}
+
+// 姿态仪
+message Proto_AttitudeIndicator{
+    optional MetaData.Proto_LLA PlaneLLA = 1; // 当前位置
+    optional MetaData.Proto_Matrix3F PlaneOrientation = 2; // 当前姿态
+    optional MetaData.Proto_Vector3F PlaneBodyFrameSpeed = 3; // 飞机在体轴坐标系中的速度。
+    optional MetaData.Proto_Vector3F PlaneENUSpeed = 4; // 飞机在全局坐标系（ENU）中的速度
+    optional float CalibratedAirspeed = 5; // 校准空速，指示飞机收到的动压。
+    optional float BatteryRemainEnergyRatio = 6; // 电池剩余电量比例
+    optional Porto_BoolDouble PlaneAGL   = 7; // 飞机高度
+    optional double PlaneRelativeHeight = 8; // 飞机相对高度
+    optional double PlanePitchErrorLowSpdPSP = 9; //  低速机动时的俯仰角误差
+    optional double PlanePitchErrorHighSpdPSP = 10; // 高速机动时的俯仰角误差
+    optional double BodyFrameZAccel = 11; // 飞机在体轴坐标系中的Z轴加速度
+    optional double CruiseThrottleRatio = 12; // 巡航油门比例，范围[0,1]
+    optional double RotorThrustRatio = 13; // 旋翼推力比例，范围[0,1]
+    optional double AoA = 14; // 迎角，单位：Rad
+}
+
+
+message Proto_FlightPlan{
+    bytes FlightPlan = 1; // 飞行计划
+}
+
+
+message  Proto_GenerateInfo{
+  optional bool IsReceivingHot = 1; // 是否正在接收热数据（连接是否中断判断条件）
+  optional bool IsMotorsAndServosEnabled = 2; // 是否使能电机和舵机
+  optional bool IsInTestMotorServoMode = 3;
+  optional double ReceivedBytesPerSecond = 4;
+  optional double SentBytesPerSecond = 5;
+  optional string ConnectedDataLinkName = 6;
+  optional bool AircraftUseFuelEngineForFixedWingCruise = 7;
+
+  repeated float ActualThrottleServoPosition = 8; // 实际油门舵机位置，范围[0,100]。
+  repeated float CylinderHeadMaxTemperature = 9;
+  repeated float EstimatedPropellerThrustN = 10; // 估算的螺旋桨的推力。
+  repeated int32 CruiseFuelEngineRPMs = 11;//int16
+  optional bool ShouldCruiseEngineAvailable = 12;
+  optional bool IsAllCruiseFuelEnginePowerOn = 13;
+  optional bool IsAllCruiseFuelEngineRunning = 14;
+  optional bool FlightControlUseAirspeedSensor = 15; // 是否有空速传感器。
+  optional bool IsUsePitotTube = 16;
+  optional bool IsInSafeMode =17;
+  optional bool DoNotUseBaroSensor = 18; // 是否不适用气压传感器。
+
+  optional float TotalRotorAndCruisePower = 19;
+  optional float MinMotorVoltage = 20; // 获取电压最低的那个电机的电压。
+  optional float MinBatteryRemainEnergyRatio = 21; // 获取电量最少的电池的剩余能量比例。值范围[0,1]
+  optional bool ShowFullBatteryEndurance = 22; // 显示至返航电量的续航能力
+  optional bool IsOnGround = 23;
+  optional float AutoLandEnergyRatio = 24;
+  optional bool EnableBatteryEnergyLowAutoReturn = 25; // 是否开启电池能量低时，自动返航的功能。
+  optional float AutoReturnBatteryEnergyRatio = 26; // 当剩余电量比例低于这个值时，且EnableBatteryEnergyLowAutoReturn为true时，触发自动返航。值范围为[0,1]。
+  optional float RemainCruiseEnergyWh = 27;
+  optional float RemainRotorEnergyWh = 28;
+
+  optional MetaData.Proto_FCControlInnerLoopLonModes LonInnerMode = 29;
+  optional float AircraftMass = 30;
+  optional float TargetFlySpeed = 31; // 目标速度。由IsTargetAirspeedElseGndspeed决定是什么速度。
+  optional double CruisePowerEstimation = 32;
+  optional double CruiseEnergyPerMeter = 33;
+  optional double RemainCruiseTime = 34;
+  optional double RemainCruiseDist = 35;
+  optional double VTOLPowerEstimation = 36;
+  optional float AirDensity = 37;
+  optional double RemainVTOLTime = 38;
+
+
+  optional float AircraftHorizDistToLandAlongFlightPlan = 39;
+  optional bool HasFixedWingModes = 40;
+
+  optional MetaData.Proto_RotorFoldingStates RotorExpandState = 41;
+  optional bool HasRetractableRotors = 42;
+  optional bool IsAutoRetractLandingGear = 43;
+  optional bool IsLandingGearRetracted = 44; // 起落架是否收起。
+
+  optional MetaData.Proto_RTKSolutionState RTKSolutionState =45; // GNSS RTK差分定位状态
+  optional MetaData.Proto_LLA LLA =46;
+  optional MetaData.Proto_EulerAnglesF EulerAnglesF = 47;
+  optional double TargetAltitude = 48;
+  optional double ReferenceAltitude = 49;
+
+  optional float TrueAirSpeed = 50; // m/s
+  optional float Ground2DSpeed = 51;
+  optional float StraightDistToTakeOff = 52;
+  optional double FlyDistance = 53;
+  optional uint32 FlySeconds = 54; // 飞行时间，单位秒。起飞时清零，降落后停止计数。
+  optional bool HasEstimatedWind = 55;
+  optional double EstimatedWindAngle = 56;
+  optional double EstimatedWindSpeed = 57;
+
+  optional bool WriteCameraPosDataToFile = 58;
+  optional uint32 UndownloadedPosDataCount = 59;//uint16
+  optional float AverageRotorThrustRatioFor1G = 60; // 1G过载时，旋翼总推力比例。值范围为[0,1]。
+  optional MetaData.Proto_Vector3F PlaneENUSpeed = 61; // 飞机在全局坐标系（ENU）中的速度
+ 
+  optional bool IsGNSS2DAvailable = 62;
+  optional bool IsGNSSAltAvailable = 63;
+  optional int32 UsingGnssSateNum = 64;
+  optional bool IsGNSSDataQualityGood = 65;
+  optional bool GNSSsomeNotUsable = 66; // 检查是否有任何GNSS不可用
+
+
+  optional bool IsIRSReadyForTakeoff = 67;
+  optional bool IsInSensorCalibrationMode = 68; // 惯导是否处在高漂移估算速度的模式。一般用来校准传感器。
+  optional bool IsInNoMagMode = 69; // 是否处在不使用磁传感器的模式。
+  optional bool IsUsingVisualPositionSystemForIRS = 70;
+  optional bool IsFlyTestParamsModified = 71;
+
+  //p4
+  optional bool IsInAutoVertPortOperationMode = 72; // 是否在自动机场运行模式。
+  optional bool IsAutoPortLandElseAlterLand = 73; // 返回true表示将降落到自动机场，返回false表示将降落到备降机场。
+  optional bool IsVerticalLanding = 74;
+  optional bool IsInLandingConstDescentAndAlignPhase = 75;
+  optional bool IsVertLandPauseTouchDownForAlignment = 76;
+  optional MetaData.Proto_PrecisionLandMaxAllowableErrors PrecisionLandMaxAllowableErrors = 77; // 精准降落允许的最大误差。LandingError
+  optional double LandingGlobal2DPosError = 78;
+  optional bool LandActiveYawAlign = 79; // 在机场降落时，是否要通过主动的方式来进行偏航对齐。即飞机转动机头来对准机场。
+  optional bool LandPassiveYawAlign = 80; // 在机场降落时，是否要通过被动的方式进行偏航对齐。即机场转动来对准飞机。
+  optional double PortTableHeadingAngle = 81; //  降落台的朝向[-PI,PI]。 向东为0，向北为PI/2。
+  optional double YawAngleAlignError = 82;
+ 
+
+  optional bool IsProtocolVersionConflict = 83;
+  optional bool CanEnterHighPosAccuRotorMode = 84; // 是否可以自动进入高精度悬停模式。
+  optional bool ServerErrorsHasMessage = 85; // 地面站软件错误列表是否有错误信息。
+  optional int32 ReceivedAircraftMessagesErrorCount = 86; // 从飞机收到的消息。包含信息、警告和错误。
+  optional int32 ReceivedAircraftMessagesWarningCount = 87;
+
+
+  optional bool IsInEngineerMode = 88; // 是否在工程师模式
+  optional bool IsLowNzProtectionActivated = 89; // 固定翼巡航时，低过载保护是否激活，即是否通过抬头来提高过载。
+  optional bool IsHighAoAProtectionActivated = 90; // 固定翼巡航时，大迎角保护是否激活，即是否限制迎角继续增大。
+  optional bool IsHighStructNzProtectionActivated = 91; // 固定翼巡航时，结构大过载保护是否激活，即是否通过低头来降低过载，以保护机体结构不受破坏。
+  optional bool IsLowSpeedPSPActivated = 92; // 固定翼巡航时，俯仰低速保护是否激活，即是否通过低头来提高速度。
+  optional bool IsHighSpeedPSPActivated = 93; // 固定翼巡航时，俯仰高速保护是否激活，即是否通过抬头来提高速度。
+  optional bool IsAltitudeDropFloorActivated = 94; // 负向高度偏离平台保护是否激活。
+  optional bool IsAltitudeRiseCeilingActivated = 95; // 正向高度偏离平台保护是否激活。
+  optional float AltitudeDeviation = 96;
+  optional bool IsAltitudeDeviationHigh = 97;
+  optional bool IsAltitudeDeviationLow = 98;
+  optional bool IsRollLostControl = 99; // 滚转是否失控。
+  optional bool IsPitchLostControl = 100; // 俯仰是否失控。
+  optional bool EmergencyLandBecauseBatteryLow = 101; // 是否触发了低电量返航。
+  optional bool EmergencyLandBecauseFlyTimeHigh = 102; // 是否触发了单次飞行时长过高返航。
+  optional bool IsRejectingTakeOff = 103;
+  optional MetaData.Proto_GyroHFRMSDPS GyroHFRMSDPS = 104; // °/s
+
+
+  optional bool IsLogFileAlmostFull = 105;
+  optional bool EnableOnGndFastFileTransmit = 106; // 在地面的时候，是否开启快速文件传输模式。通常需要线直连飞机才能使用这种模式。
+  optional double MinimumRemainRatio = 107;
+  optional double WarningRemainRatio = 108;
+  optional int64 DateTimeNow = 109;
+  optional int64 DebugCurveLastReceiveTime = 110;
+  optional int64 LastReceivingGNSSRawDataTime = 111;
+  optional uint64 AllGNSSRawDataCounter = 112;
+
+
+  optional bool IsRequestOpenOnboardLog = 113;
+  optional bool IsOnboardLogOpen = 114;
+  optional bool IsWingCruiseHasFailed = 115;
+  optional bool IsEmergencyLand = 116;
+  optional bool IsEmergencyLandRequested = 117;
+  optional bool DisableEmergencyAutoLand = 118; // 是否禁用紧急情况下自动降落功能。
+  optional bool EnableGroundDistLowWarning = 119; // 是否启用低地面高度报警。
+  optional bool IsLowGndDistWarning = 120; // 是否触发了距离地面高度过低警告。
+  optional bool IsAGLBySonarAvailable = 121;
+  optional float LandingGearAltAGLByRadar = 122; // dist
+  optional bool IsLowAltProtectionActive = 123; // 是否触发了距地高度保护
+  optional bool IsControllerHearingFromAircraft = 124;
+  optional bool IsAircraftHearingFromController = 125;
+  optional bool IsInOnGroundActionLayerCommandMode = 126; // 是否在地面测试模式。
+  optional bool HasManualRCReceiver = 127; // 飞机上是否装有人工控制的遥控器接收机。
+  optional bool HasManualControlInputs = 128;
+  optional bool EnableExceptionWhenRCReceiverNoSignal = 129; // 是否在没有收到遥控器信号的时候，抛异常。
+  
+  optional string SensorInvalidMessage = 130; // 获取无效的传感器消息。已经关闭的传感器不会报无效状态。
+
+  optional MetaData.Proto_ControlTaskModes TaskMode = 131;
+  optional bool IsPilotControlActive = 132;
+  optional bool ManualControlInDisableMotorServoState = 133; // 如果不在遥控器接管模式，且当前动力系统启用，且遥控器处于动力系统停用状态，就会发出这个警报。
+  optional bool CanEnterWingFlyWithRotorMode = 134; // 是否可以进入过渡转换模式
+  optional bool CanEnterWingCruiseMode = 135; // 是否可以进入固定翼巡航模式
+  optional int32 CruiseMotorCount = 136;//byte
+  optional bool EnableCruiseMotorInRotorHoverMode = 137; // 旋翼悬停模式下，是否可以使用巡航推进电机。
+  optional bool EnforceRTKTakeOffAndLand = 138; // 是否强制RTK起飞和降落。不满足要求则无法起飞，或者只能去备降点降落。
+  optional bool IsRTKAndIRSPrecisionOKForAutoPortTakeOff = 139; // 在RTK起飞模式，当前的定位精度和惯导误差是否满足起飞要求。
+  optional bool IsGimbalCamSDCardDestroyPowerOn = 140;
+  optional bool IsGimbalCameraNotDetected = 141; // 是否未探测到云台吊舱
+  optional float TargetAltitudeHMSLOffset = 142; // 当目标高度为海拔高度的时候，目标高度的偏移量。当目标高度为距地高度时，此设置不起作用。
+  optional float TargetAltitudeAGLOffset = 143; // 当目标高度为距地高度的时候，目标高度的偏移量。当目标高度为海拔高度时，此设置不起作用。
+  optional bool IsWingCruiseAirspeedPriorToHeight = 144; // 在固定翼巡航飞行的时候，是否保持空速控制优先级高于高度控制。在这种模式下，保持通过升降舵控制速度，爬升和下降的时候速度将尽可能维持设定速度。
+}
