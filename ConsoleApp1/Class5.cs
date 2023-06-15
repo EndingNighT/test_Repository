@@ -1,80 +1,28 @@
-﻿using System;
-using System.Reflection;
-using Google.Protobuf.Collections;
-using Proto3FlightInfo;
+﻿//using Google.Protobuf;
+//using Google.Protobuf.Collections;
+//using Google.Protobuf.Reflection;
 
-// 使用 Protobuf 定义的类
-//message Proto_PowerInfo
+//// 假设已经加载了Proto文件并构建了相应的描述符对象
+//FileDescriptorSet descriptorSet = ...; // 已加载的Proto文件描述符集合
+//FileDescriptorProto fileDescriptor = descriptorSet.Files[0]; // 假设只有一个Proto文件
+//MessageDescriptorProto messageDescriptor = fileDescriptor.MessageTypes[0]; // 假设要操作的消息类型是第一个
+
+//// 获取 repeated int32 字段的描述符
+//FieldDescriptorProto fieldDescriptor = messageDescriptor.Fields[0]; // 假设第一个字段是 repeated int32 类型
+
+//// 创建消息类型的动态生成类
+//MessageDescriptor dynamicDescriptor = MessageDescriptor.BuildFrom(messageDescriptor, fileDescriptor);
+//IMessage dynamicMessage = dynamicDescriptor.Parser.DefaultTemplateInstance;
+
+//// 将值赋给 repeated int32 字段
+//int[] values = { 1, 2, 3, 4, 5 }; // 假设要赋的值是 1, 2, 3, 4, 5
+//dynamicMessage[fieldDescriptor] = new RepeatedField<int>(values);
+
+//// 可以通过以下方式获取字段的值
+//RepeatedField<int> fieldValues = (RepeatedField<int>)dynamicMessage[fieldDescriptor];
+
+//// 输出字段的值
+//foreach (int value in fieldValues)
 //{
-//    optional bool IsUsingBattery = 1;
-//    repeated float BatteryVoltage = 2;
-//    repeated float BatteryCurrent = 3;
-//    repeated float BatteryRemaining = 4;
-//    repeated float BatteryCapacity = 5;
-//    optional bool IsUsingFuel = 6;
-//    optional float FuelRemaining = 7;
+//    Console.WriteLine(value);
 //}
-
-public struct MyStruct
-{
-    public bool IsUsingBattery;
-    public float[] BatteryVoltage;
-    public float[] BatteryCurrent;
-    public float[] BatteryRemaining;
-    public float[] BatteryCapacity;
-    public bool IsUsingFuel;
-    public float FuelRemaining;
-}
-
-public class Program
-{
-    public static void Main231231()
-    {
-        MyStruct myStruct = new MyStruct
-        {
-            IsUsingBattery = true,
-            BatteryVoltage = new float[] { 3.7f, 3.8f, 3.6f },
-            BatteryCurrent = new float[] { 1.2f, 1.1f, 1.3f },
-            BatteryRemaining = new float[] { 80.5f, 75.2f, 85.3f },
-            BatteryCapacity = new float[] { 1000f, 1200f, 900f },
-            IsUsingFuel = false,
-            FuelRemaining = 50.2f
-        };
-
-        Proto_PowerInfo data = new Proto_PowerInfo();
-
-        CopyStructToProtobuf(myStruct, data);
-
-        var defaultlist = new List<float> { 3.7f, 3.8f, 3.6f };
-
-        Console.WriteLine($"IsUsingBattery: {data.IsUsingBattery}");
-
-
-        var test2 = myStruct.BatteryVoltage;
-        var test = data.BatteryVoltage;
-
-        Console.WriteLine("BatteryVoltage: " + string.Join(", ", values: data.BatteryVoltage));
-        Console.WriteLine("BatteryCurrent: " + string.Join(", ", data.BatteryCurrent));
-        Console.WriteLine("BatteryRemaining: " + string.Join(", ", data.BatteryRemaining));
-        Console.WriteLine("BatteryCapacity: " + string.Join(", ", data.BatteryCapacity));
-        Console.WriteLine($"IsUsingFuel: {data.IsUsingFuel}");
-        Console.WriteLine($"FuelRemaining: {data.FuelRemaining}");
-    }
-
-    public static void CopyStructToProtobuf<TStruct>(TStruct source, Proto_PowerInfo destination)
-        where TStruct : struct
-    {
-        Type structType = typeof(TStruct);
-        Type messageTypeInfo = typeof(Proto_PowerInfo);
-
-        foreach (FieldInfo structField in structType.GetFields())
-        {
-            PropertyInfo messageProperty = messageTypeInfo.GetProperty(structField.Name);
-            if (messageProperty != null && messageProperty.CanWrite)
-            {
-                object value = structField.GetValue(source);
-                messageProperty.SetValue(destination, value);
-            }
-        }
-    }
-}

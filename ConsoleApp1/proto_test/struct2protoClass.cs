@@ -76,6 +76,8 @@ public class Program2
 
     }
 
+
+
     public static void Mai12312n()
     {
 
@@ -93,6 +95,8 @@ public class Program2
             //FuelRemaining= 50
         };
 
+
+        
 
         //my_func(info, ref data);
         my_func(info);

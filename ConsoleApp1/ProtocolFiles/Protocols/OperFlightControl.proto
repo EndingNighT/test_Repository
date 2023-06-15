@@ -2,6 +2,35 @@ syntax = "proto3";
 package proto3_flight_info;
 import "MetaData.proto";
 
+message Proto_TestInfo {
+optional bool IsUsingBattery = 1; // 是否使用电池
+optional bool IsUsingFuel = 2; // 是否使用油箱
+
+optional int32 FuelRemaining1 = 3;
+optional int32 FuelRemaining2 = 4;
+
+optional float MinMotorVoltage1 = 5; // 油箱剩余油量
+optional float MinMotorVoltage2 = 6; // 油箱剩余油量
+
+repeated bool CruiseFuelEngineRPMs1 = 7; // int16
+repeated bool CruiseFuelEngineRPMs2 = 8; // int16
+
+repeated int32 Milliseconds1 = 9; // int16
+repeated int32 Milliseconds2 = 10; // int16
+
+repeated float BatteryCurrent = 11; // 电池电流
+repeated float BatteryRemaining = 12; // 电池剩余电量
+
+optional string TestString = 13; // string
+repeated string TestStrings = 14; // repeated string
+
+optional MetaData.Proto_MessageLevel MessageLevel = 15; // 枚举enum
+repeated MetaData.Proto_MessageLevel MessageLevels = 16; // 枚举enum
+
+optional MetaData.Proto_LLA LLA = 17; // message
+repeated MetaData.Proto_LLA Messages = 18; // repeated message
+}
+
 message Proto_FlyBaseStatus {
   string Name = 1;                             // 飞机名称
   optional int32 Milliseconds = 2;                      // 时间
