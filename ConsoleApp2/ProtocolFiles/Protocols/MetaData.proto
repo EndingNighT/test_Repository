@@ -1,0 +1,199 @@
+syntax = "proto3";
+package MetaData;
+
+message Proto_LLA {
+    double latitude = 1;
+    double longitude = 2;
+    double altitude = 3;
+}
+
+
+message  Proto_Coordinate2D {
+    double X = 1;
+    double Y = 2;
+}
+
+message  Proto_Coordinate3D {
+    double X = 1;
+    double Y = 2;
+    double Z = 3;
+}
+message Proto_EulerParamsF{
+    float L0 = 1;
+
+    float L1 = 2;
+
+    float L2 = 3;
+
+    float L3 = 4;
+}
+message  Proto_EulerAnglesF{
+    float roll = 1;
+
+    float pitch = 2;
+
+    float yaw = 3;
+}
+
+enum  Proto_FlyMode {
+    // 实时控制模式
+    RemoteInstantControl = 0;
+    // 飞行计划模式
+    FlightPlan = 1;
+    // 手动控制模式(遥控器模式)
+    ManualControl = 2;
+    Unknown =3;
+}
+
+
+enum  Proto_ControlTaskStates{
+    OnGround = 0;
+    WaitingForTakeoff_ConditionsNotSatisfied = 1;
+    WaitingForTakeoff_RotorNotReady = 2;
+    Takeoff_LiftOff = 3;
+    Takeoff_Climb = 4;
+    Landed_RetractingRotor = 5;
+    Landed = 6;
+    Landing_Descending = 7;
+    Landing_TouchDown = 8;
+    Landing_ConstDescend = 9;
+    FlyTo = 10;
+    FlyAlongLine = 11;
+    FlyAlongArc = 12;
+    Hover = 13;
+    ReleaseCargoInTheAir = 14;
+    ReleaseCargoOnGround = 15;
+    RemoteControlFly = 16;
+    ManualControlLiftOff = 17;
+    ManualControlFly = 18;
+    RejectTakeOff = 19;
+}
+
+
+enum  Proto_GNSSLocationStatus{
+    // 3D定位
+    GNSS_3D = 0;
+    // 2D定位
+    GNSS_2D = 1;
+    // 无定位
+    GNSS_NO = 2;
+}
+
+enum  Proto_RTKSolutionState{
+    // RTK固定解
+    RTK_FixedSolution = 0;
+    // RTK浮点解
+    RTK_FloatSolution = 1;
+    // RTK无解
+    RTK_NoSolution = 2;
+}
+
+message  Proto_PointOnFlyPath{
+     int32 PlanItemIndex = 1;
+     float DistanceFromItemRouteStart= 2;
+}
+
+enum  Proto_MessageLevel{
+    // 信息
+    Info = 0;
+    // 警告
+    Warning = 1;
+    // 错误
+    Error = 2;
+}
+ 
+
+  message Proto_Matrix3F {
+    float A00 = 1;
+    float A01 = 2;
+    float A02 = 3;
+    float A10 = 4;
+    float A11 = 5;
+    float A12 = 6;
+    float A20 = 7;
+    float A21 = 8;
+    float A22 = 9;
+  }
+
+  message Proto_Vector3F{
+    float X = 1;
+    float Y = 2;
+    float Z = 3;
+  }
+ 
+  message Proto_LandingError{
+    // 平面位移误差。
+    float Position2DError = 1;
+
+    // 航向角误差。单位为弧度。
+    float YawAngleError = 2;
+  }
+
+  enum  Proto_ControlTaskModes{
+    // Fly using 2.4G remote controller. 
+    // Ground speeds are controlled manually in the ENU frame.
+    // Quad rotors will not retract in this mode.
+    Proto_ControlTaskModes_ManualControl = 0;
+    // Fly according to remote control commands from server.
+    Proto_ControlTaskModes_RemoteInstantControl = 1;
+    // Fly according to a schedule.
+    Proto_ControlTaskModes_RunSchedule = 2;
+  }
+
+  enum  Proto_RotorFoldingStates{
+    // 旋翼完全展开，旋翼可以正常工作
+    RotorUnfolded = 0;
+    // 将旋翼刹车到保持怠速运转
+    RotorBraking = 1;
+    // 释放旋翼锁定
+    RotorReleasing = 2;
+    // 将旋翼转动到位并锁止
+    RotorLocking = 3;
+    // 悬臂收起
+    RotorBeamFolding = 4;
+    // 悬臂展开
+    RotorBeamUnfolding = 5;
+    // 舱门关闭
+    GateClosing = 6;
+    // 舱门打开
+    GateOpening = 7;
+    // 旋翼完全收起
+    RotorFolded = 8;
+  }
+
+  message Proto_GyroHFRMSDPS{
+    double X = 1;
+    double Y = 2;
+    double Z = 3;
+  }
+
+  message Proto_PrecisionLandMaxAllowableErrors{
+    // 平面位移误差。
+    float Position2DError = 1;
+    // 航向角误差。单位为弧度。
+    float YawAngleError = 2;
+
+  }
+  
+  enum  Proto_FCControlInnerLoopLonModes{
+    // Stay on ground. 
+    // Do not output any control. Receives sensor data.
+    Proto_FCControlInnerLoopLonModes_OnGround = 0;
+
+    // Fly with quad rotor, do not use tail propeller.
+    // Tightly track displacement, velocity and acceleration commands.
+    // This is also longitudinal lift off mode.
+    Proto_FCControlInnerLoopLonModes_RotorHover = 1;
+
+    // Fixed-wing flight with tail propeller only, but with quad rotor expanded.
+    // Tightly track displacement, velocity and acceleration commands.
+    // Will transit to QuadFly mode when attack angle is higher than 2 deg.
+    Proto_FCControlInnerLoopLonModes_WingFly = 3;
+
+    // Locked in wing fly mode. Can retract quad rotor.
+    // Tightly control airspeed, lossly control altitude.
+    // Only exit this mode when need to decelerate or fixed wing stalls.
+    Proto_FCControlInnerLoopLonModes_WingCruise = 4;
+  }
+
+

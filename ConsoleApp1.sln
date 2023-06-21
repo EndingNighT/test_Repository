@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 		ConsoleApp1\Class1.cs = ConsoleApp1\Class1.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{DC2C305D-D2C0-4987-84B1-2CD91E21574B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test4Any", "Test4Any\Test4Any.csproj", "{F88860F0-CBE7-4E83-A8DD-54922EAF9CBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{760CB70A-C524-4F78-9AE3-A94118195334}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{760CB70A-C524-4F78-9AE3-A94118195334}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{760CB70A-C524-4F78-9AE3-A94118195334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2C305D-D2C0-4987-84B1-2CD91E21574B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2C305D-D2C0-4987-84B1-2CD91E21574B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2C305D-D2C0-4987-84B1-2CD91E21574B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2C305D-D2C0-4987-84B1-2CD91E21574B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F88860F0-CBE7-4E83-A8DD-54922EAF9CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88860F0-CBE7-4E83-A8DD-54922EAF9CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88860F0-CBE7-4E83-A8DD-54922EAF9CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F88860F0-CBE7-4E83-A8DD-54922EAF9CBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

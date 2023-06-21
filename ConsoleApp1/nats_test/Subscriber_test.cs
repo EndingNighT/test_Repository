@@ -10,7 +10,7 @@ class Subscriber
     const string sub = "your_topic";
     const string sub2 = "Aircrafts.E6A-Sim3881996C.AircraftManager.Proto_GnssInfo";
     const string suball = ">";
-    static void Mainsub()
+    static void Mai2312n()
     {
         // 连接到 NATS 服务器
         using (IConnection connection = new ConnectionFactory().CreateConnection())
