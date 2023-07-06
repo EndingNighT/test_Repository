@@ -33,7 +33,46 @@ class Subscriber
 }
 
 
+class Publisher
+{
+    public enum Es : byte
+    {
+        A = 0,
+        B = 1,
+        C = 2,
+        D = 3,
+    }
 
+    static void Main23231()
+    {
+        // 连接到 NATS 服务器
+        using (IConnection connection = new ConnectionFactory().CreateConnection())
+        {
+            // 发布消息到主题
+            string message = "Hello, NATS!";
+            byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            connection.Publish("your_topic", data);
+
+            System.Console.WriteLine("消息已发布: " + message);
+
+
+            Es e = new Es();
+            Es? e2;
+
+
+            DateTime now = DateTime.Now;
+
+            byte[] bytes = BitConverter.GetBytes(now.ToBinary());
+            int intValue = BitConverter.ToInt32(bytes, 0);
+
+
+
+
+
+
+        }
+    }
+}
 
 
 

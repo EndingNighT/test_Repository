@@ -24,6 +24,12 @@ public class Program
 {
     public static void Main()
     {
+
+        Console.WriteLine("Rotor reg thrust(m/s²):" + " ");
+        Console.WriteLine("Rotor reg roll(m/s²)  \t:" + " ");
+        Console.WriteLine("Rotor reg pitch(m/s²) :" + " ");
+        Console.WriteLine("Rotor reg yaw(m/s²)   :" + " ");
+
         object obj = new float[] { 1.0f, 2.0f, 3.0f };
 
         if (obj is IEnumerable<float> enumerable)
