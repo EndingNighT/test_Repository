@@ -10,7 +10,7 @@
         <TabControl>
             <TabControl.ItemContainerStyle>
                 <Style TargetType="TabItem">
-                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Width" Value="120" />
                     <Setter Property="Height" Value="50" />
                     <!--<Setter Property="Margin" Value="10,0,0,0" />-->
                 </Style>
@@ -18,8 +18,8 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="10" Height="10" Fill="DarkGray"/>
-                        <TextBlock>Tab 1</TextBlock>
+                        <!--<Ellipse Width="10" Height="10" Fill="DarkGray"/>-->
+                        <TextBlock>Simple example</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
@@ -41,7 +41,7 @@
                     <Grid Grid.Column="1">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
-                                <Window>
+                                <!--<Window>
                                     <StackPanel>
                                         <TextBox>hello</TextBox>
 
@@ -55,14 +55,21 @@
                                         <TextBlock>aaa</TextBlock>
                                     </StackPanel>
                                 </Window>
-                                <Window>
+                                <Window Title="wode">
                                     <StackPanel>
                                         <TextBox>hello</TextBox>
 
                                         <TextBlock>aaa</TextBlock>
                                     </StackPanel>
-                                </Window>
+                                </Window>-->
 
+                                <local:SmallWindow Title="Small Window 1" CloseButtonClicked="SmallWindow_CloseButtonClicked" />
+                                <Popup x:Name="popup1" IsOpen="True" Placement="Center">
+                                    <Border Background="White" BorderBrush="Black" BorderThickness="10">
+                                        <!-- 子窗口1 的内容 -->
+                                        <Button Content="Button"/>
+                                    </Border>
+                                </Popup>
 
                             </StackPanel>
                         </ScrollViewer>
@@ -75,7 +82,7 @@
 
 
             </TabItem>
-            <TabItem Header="Tab 2">
+            <TabItem Header="Advanced example">
                 
             </TabItem>
             
