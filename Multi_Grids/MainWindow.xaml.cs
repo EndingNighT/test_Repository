@@ -1,5 +1,4 @@
-﻿using MyUserControl;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,12 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace WpfApp3
+namespace Multi_Grids
 {
-    using MyUserControl;
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -29,8 +25,8 @@ namespace WpfApp3
             InitializeComponent();
             init_test();
             line();
-
         }
+
 
         public Window JYWinPanel;
         public Window Win_Chart;
@@ -51,7 +47,7 @@ namespace WpfApp3
         }
 
 
-        
+
         private void OpenScatter(object sender, RoutedEventArgs e)
         {
             LineGeometry myLineGeometry = new LineGeometry();
@@ -91,7 +87,7 @@ namespace WpfApp3
 
                         Win_Chart.SizeToContent = SizeToContent.Manual;
 
-                        var panel = new Window1();//  点图//UserControl对象
+                        var panel = new UserControl1();//  点图//UserControl对象
 
                         Win_Chart.Width = 1000;
                         Win_Chart.Height = 1000;
@@ -200,8 +196,6 @@ namespace WpfApp3
         {
             numericUpDown.Visibility = Visibility.Collapsed;
         }
-
-
 
     }
 }

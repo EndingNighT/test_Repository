@@ -42,6 +42,8 @@ namespace ScatterPlot_CanvasTest
     public partial class MainWindow : Window , IDisposable
     {
         bool IsDisposed = false;
+        bool IsPause = false;
+
         bool IsDrawingGo = false;
 
         bool IsDrawingGo2 = false;
@@ -235,16 +237,20 @@ namespace ScatterPlot_CanvasTest
 
             scatterPlotCanvas2.Visibility = Visibility.Collapsed;
 
-            Task.Run(async() =>
+
+
+            var t = Task.Run(async() =>
             {
 
                 while (true)
                 {
 
+
+
                     if (IsDrawingGo2)
                     {
 
-                        (points_x, points_y) = generatePoints();
+                        //(points_x, points_y) = generatePoints();
 
                         (points_x, points_y) = csvPoints.generatePoints2();
 
@@ -262,9 +268,17 @@ namespace ScatterPlot_CanvasTest
 
                                 x = x_ * (scatterPlotCanvas.ActualWidth - 6);
                                 y = y_ * (scatterPlotCanvas.ActualWidth - 6);
-
+                                y = scatterPlotCanvas.ActualWidth - y;
                                 //x = points_x[i] * (scatterPlotCanvas.Width - 6);
                                 //y = points_y[i] * (scatterPlotCanvas.Height - 6);
+
+
+
+                                if (double.IsNaN(x) || double.IsInfinity(x) || double.IsNaN(y) || double.IsInfinity(y))
+                                {
+                                    i++;
+                                    continue;
+                                }
 
                                 Canvas.SetLeft(ellipse, x);
                                 Canvas.SetTop(ellipse, y);
@@ -304,7 +318,28 @@ namespace ScatterPlot_CanvasTest
 
         }
 
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            Ellipse ellipse = new Ellipse();
+            ellipse.Width = 3;
+            ellipse.Height = 3;
+            ellipse.Fill = Brushes.Red;
 
+            Canvas.SetLeft(ellipse, 10);
+            Canvas.SetTop(ellipse, 20);
+
+            scatterPlotCanvas.Visibility = Visibility.Visible;
+
+            scatterPlotCanvas.Children.Add(ellipse);
+
+
+        }
+
+
+        private void Button_Click_Pause(object sender, RoutedEventArgs e)
+        {
+            IsPause = true;
+        }
 
         private void DrawScatterPlot()
         {
@@ -458,11 +493,16 @@ namespace ScatterPlot_CanvasTest
 
 
 
+
+
+
         public void Dispose()
         {
             IsDisposed = true;
 
             throw new NotImplementedException();
         }
+
+
     }
 }

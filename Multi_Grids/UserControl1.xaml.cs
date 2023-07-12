@@ -10,21 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp3
+namespace Multi_Grids
 {
     /// <summary>
-    /// Window1.xaml 的交互逻辑
+    /// UserControl1.xaml 的交互逻辑
     /// </summary>
-    public partial class Window1 : System.Windows.Controls.UserControl
+    public partial class UserControl1 : UserControl
     {
-        public Window1()
+        public UserControl1()
         {
             InitializeComponent();
             Draw2daxis();
             DrawScatterPlot();
         }
+
 
         private void Draw2daxis()
         {
@@ -114,8 +116,8 @@ namespace WpfApp3
                 ellipse.Height = 5;
                 ellipse.Fill = Brushes.LightBlue;
 
-                double x = random.NextDouble() * (scatterPlotCanvas.Width-20);
-                double y = random.NextDouble() * (scatterPlotCanvas.Height-20);
+                double x = random.NextDouble() * (scatterPlotCanvas.Width - 20);
+                double y = random.NextDouble() * (scatterPlotCanvas.Height - 20);
 
                 Canvas.SetLeft(ellipse, x);
                 Canvas.SetTop(ellipse, y);
@@ -131,6 +133,5 @@ namespace WpfApp3
         {
             scatterPlotCanvas.Children.Clear();
         }
-
     }
 }

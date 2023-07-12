@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyUserControl
+namespace Multi_Grids
 {
     public partial class NumericUpDown : System.Windows.Controls.UserControl
     {
