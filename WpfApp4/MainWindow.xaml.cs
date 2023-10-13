@@ -110,6 +110,8 @@ namespace WpfApp4
 
 
 
+
+
         private void AddGrouping(object sender, RoutedEventArgs e)
         {
             _myView = (CollectionView)CollectionViewSource.GetDefaultView(myItemsControl.ItemsSource);

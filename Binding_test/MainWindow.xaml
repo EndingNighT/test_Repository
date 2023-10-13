@@ -42,7 +42,7 @@
             <Label Width="200" HorizontalAlignment="Left"
                 Target="{Binding ElementName=textBox2}">
                 <AccessText TextWrapping="WrapWithOverflow">
-                    _Another long piece of text that requires text wrapping goes here.
+                    _Another long piece of text that requires text wrapping goes here..
                 </AccessText>
             </Label>
         </StackPanel>

@@ -10,7 +10,7 @@ using Google.Protobuf.WellKnownTypes;
 public class Program_Test
 {
 
-    public static void Main()
+    public static void Main234()
     {
 
 

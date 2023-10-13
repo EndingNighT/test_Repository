@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Reflection;
 using System.Text;
 using NATS.Client;
@@ -6,9 +7,14 @@ using NATS.Client;
 
 
 //客户端  发送请求
-class Publisher_Request
+public class Publisher_Request
 {
-    static void Mainnats()
+
+
+    const string suball = ">";
+
+    //方式一
+    public static void Mainnats()
     {
         // 连接到 NATS 服务器
         using (var connection = new ConnectionFactory().CreateConnection())
@@ -23,34 +29,84 @@ class Publisher_Request
             Console.WriteLine("Received response: " + Encoding.UTF8.GetString(response.Data));
         }
 
+
+
+    }
+
+    //方式二 使用配置
+    public static void Mainnats2()
+    {
         Options opts = ConnectionFactory.GetDefaultOptions();
         string[] servers = new string[] {
                 "192.168.20.18:4222",
-            };
+                //"127.0.0.1:4222",
+            };//url
         opts.User = "usr";
         opts.Password = "pwd";
         opts.Servers = servers;
         opts.ReconnectWait = 10000;
         opts.MaxReconnect = int.MaxValue;
-
-        var nats_con = new ConnectionFactory().CreateConnection(opts);
-
-        if (nats_con != null && nats_con.State == ConnState.CONNECTED)
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        opts.DisconnectedEventHandler += (s, e) =>
         {
-            Console.WriteLine("connected");
+
+            Console.WriteLine("和Nats服务端 断开", ConsoleColor.Red);
+        };
+        opts.ReconnectedEventHandler += (s, e) =>
+        {
+            Console.WriteLine("已重连到NATS服务", ConsoleColor.Green);
+        };
+
+
+        IConnection? nats_con = null;
+
+        try
+        {
+            nats_con = new ConnectionFactory().CreateConnection(opts);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
         }
 
-    }
 
+        while (true)
+        {
+            if (nats_con ==null)
+            {
+                Console.WriteLine("null");
+                continue;
+            }
+            if (nats_con.State != ConnState.CONNECTED)
+                Console.WriteLine($"connection state  {nats_con.State}");
+
+            // 订阅主题
+            //IAsyncSubscription subscription = nats_con.SubscribeAsync(suball, (sender, args) => {
+            //    // 处理接收到的消息
+            //    string message = System.Text.Encoding.UTF8.GetString(args.Message.Data);
+            //    System.Console.WriteLine("接收到消息: " + message);
+            //});
+
+
+            
+            //Thread.Sleep(1000);
+
+
+        }
+
+
+
+
+    }
 
 
 }
 
 
 //服务端  响应请求
-class Subscriber_Respond
+public class Subscriber_Respond
 {
-    static void Main2332()
+    public static void Main2332()
     {
         // 连接到 NATS 服务器
         using (var connection = new ConnectionFactory().CreateConnection())
