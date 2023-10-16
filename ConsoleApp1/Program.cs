@@ -46,6 +46,7 @@ public class Program_Class
 
     //bool变量不添加前缀修饰，是Boolean类型，为4个字节 
     //[StructLayout(LayoutKind.Sequential, Pack = 8)] // 默认为8
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct MyStruct
     {
         public int a;
@@ -202,23 +203,39 @@ public class Program_Class
     {
         //testStatus();
 
-        var ch = GetChannel();
+        //var ch = GetChannel();
 
-        Console.WriteLine($"{ch.FD_Channel}");
-        Console.WriteLine($"{ch.GS_Channel}");
-        Console.WriteLine($"{ch.link_data_status}");
-        Console.WriteLine($"{ch.turntable_data_status}");
+        //Console.WriteLine($"{ch.FD_Channel}");
+        //Console.WriteLine($"{ch.GS_Channel}");
+        //Console.WriteLine($"{ch.link_data_status}");
+        //Console.WriteLine($"{ch.turntable_data_status}");
 
 
-        Channel* pointer = &ch;
-        Console.WriteLine($"变量 myVariable 的值：{ch} 内存大小为{sizeof(Channel)} {Marshal.SizeOf(typeof(Channel))} {Marshal.SizeOf(ch)}");
-        Console.WriteLine("变量 myVariable 的内存表示：");
-        byte* bytePointer4 = (byte*)pointer; // 将整数指针转换为字节指针
-        for (int i = 0; i < Marshal.SizeOf(ch); i++)
+        //Channel* pointer = &ch;
+        //Console.WriteLine($"变量 myVariable 的值：{ch} 内存大小为{sizeof(Channel)} {Marshal.SizeOf(typeof(Channel))} {Marshal.SizeOf(ch)}");
+        //Console.WriteLine("变量 myVariable 的内存表示：");
+        //byte* bytePointer4 = (byte*)pointer; // 将整数指针转换为字节指针
+        //for (int i = 0; i < Marshal.SizeOf(ch); i++)
+        //{
+        //    Console.Write($"{bytePointer4[i]:X2} "); // 输出每个字节的十六进制表示
+        //}
+        //Console.WriteLine("");
+
+        Type structType = typeof(MyStruct);
+        var layoutAttribute = structType.StructLayoutAttribute;
+
+        if (layoutAttribute != null)
         {
-            Console.Write($"{bytePointer4[i]:X2} "); // 输出每个字节的十六进制表示
+            Console.WriteLine("LayoutKind: " + layoutAttribute.Value.ToString());
+
+            Console.WriteLine("CharSet: " + layoutAttribute.CharSet);
+            Console.WriteLine("Pack: " + layoutAttribute.Pack);
+            Console.WriteLine("Size: " + layoutAttribute.Size);//Marshal.SizeOf(structType)
         }
-        Console.WriteLine("");
+        else
+        {
+            Console.WriteLine("LayoutKind: Default (Sequential)");
+        }
 
 
     }
