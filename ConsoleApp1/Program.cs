@@ -274,7 +274,7 @@ public class Program_Class
 
     static unsafe void offset1(Status status)
     {
-        Status * statusPtr = &status;
+        Status* statusPtr = &status;
         {
             Console.WriteLine("Size: {0}", sizeof(Status));
             Console.WriteLine("GS_AGC Offset: {0}", (byte*)&status.GS_AGC - (byte*)statusPtr);
@@ -307,6 +307,3 @@ public class Program_Class
     }
 
 }
-
-
-
