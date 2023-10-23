@@ -62,7 +62,7 @@ public static class StructToProtobufMapper
 
 public class Program2323
 {
-    public static void Main()
+    public static void Main23()
     {
         PowerInfo_list powerInfoList = new PowerInfo_list
         {
